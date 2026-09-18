@@ -66,12 +66,22 @@ command line; read your model and effort from it by the flags in your CLI's
 On a harness without that tool, write the same two questions as numbered
 options in plain text and end your turn; continue on the user's answer.
 
-**A quota outage overrides the choice.** When the advisor's model has hit its
-usage limit, the tell in its pane is `You've hit your usage limit`, sometimes
-with the model silently downgraded. Re-create it on the next eligible row,
-telling it in the handoff when it shares your family, so it should spot-check
-your claims against the code. Restore the chosen pairing once the quota
-resets.
+**A dead advisor overrides the choice.** Before ending any turn while the pair
+is live, read its pane once: `herdr agent read "$advisor" --source visible`.
+Four tells, one remedy: a line beginning `You've hit your` and ending in
+`limit` (Claude Code's weekly, fast and monthly-spend limits; Codex's usage
+limit), a status line naming a model other than the one you launched (Codex
+downgrades silently, and its session log records no error), a permission
+dialog (`agent_status` is `blocked`), which nobody will answer, or the read
+failing because the pane's agent is gone. Stop it and close its pane (the
+recipe under *Stop the advisor*, then `herdr pane close`), and re-create it on
+the next eligible row of `MODELS.md` that an installed harness can launch;
+when the harness's own login is what ran out, launch through its alias row in
+`HARNESS-CLIS.md`; when the row shares your family, say so in the handoff so
+it spot-checks your claims against the code. After re-creating, wait 20 s and
+read once more before ending the turn, so a replacement that also died falls
+through. Never ask: the user may be away. Report the swap in one line quoting
+the tell and the reset time it names.
 
 ## Create or reuse the advisor
 
@@ -145,6 +155,9 @@ Your side:
   remote resource, sending a message, force-pushing over shared history,
   destroying untracked data, spending money), so the advisor decides them
   knowingly.
+- **Read the advisor pane before ending a turn.** A dead advisor is replaced
+  on the spot; the tells and the recipe are under *A dead advisor overrides
+  the choice*.
 - **Journal the advisor's answers.** Where the project keeps a `DECISIONS.md`,
   record each call the advisor made for the user with `Decided-by: advisor`.
   Never read an empty advisor pane as "the user": an accepted prompt suggestion
@@ -160,8 +173,8 @@ Your side:
 The watchdog re-prompts every turn the advisor ends while its name carries the
 `-advisor` suffix, up to eight an hour, leaving alone a new turn started
 within 10 s; past the cap it releases the advisor and notifies the user. So
-`Esc` in its pane is not a stop. To end it, on the user's say-so, by pane ID,
-since the name is gone after the first command:
+`Esc` in its pane is not a stop. To end it, on the user's say-so or on a dead
+advisor's tell, by pane ID, since the name is gone after the first command:
 
 ```bash
 herdr agent rename <advisor-pane-id> --clear

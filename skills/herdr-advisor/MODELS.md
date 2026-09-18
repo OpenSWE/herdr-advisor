@@ -7,11 +7,9 @@ harness a model runs in is a separate choice: `HARNESS-CLIS.md`.
 
 **Rules.** The advisor's rank must be at or above the worker's; among eligible
 rows prefer another family, then the higher rank. A worker whose own model is
-unreadable assumes it is the top row of its family. When the chosen model is at
-its usage limit (`You've hit your usage limit` in the advisor pane, sometimes
-with a silent downgrade), take the next eligible row and restore the first
-pairing once the quota resets. Launch with the row's effort; where the CLI
-tops out lower, use its top rung.
+unreadable assumes it is the top row of its family. When the chosen row is
+dead, `SKILL.md` says how to tell and what to take next. Launch with the row's
+effort; where the CLI tops out lower, use its top rung.
 
 | Rank | Model | Family | Effort | Pass@1 |
 |---:|---|---|---|---:|

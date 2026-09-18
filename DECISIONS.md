@@ -13,7 +13,7 @@ and in-text citations below still resolve.
 **Do not renumber to close the leading gap.** `log-decisions`' position check will report it as a
 break — that is expected here. A renumbering pass would have to rewrite ~35 citations, and `Q<n>`
 also appears in these entries as a *grilling*-question reference (e.g. "grill Q5"), a separate
-namespace an offset would silently corrupt. Append the next entry as **Q57**.
+namespace an offset would silently corrupt. Append the next entry as **Q58**.
 
 ## Q22 — interactive/herdr-advisor — gate-resolution
 
@@ -392,3 +392,14 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Outcome:** applied
 **Ref:** herdr-advisor/SKILL.md (frontmatter, opening rule, Roles, Hand off, Stop the advisor); README.md.
 **Supersedes:** Q46 — the frontmatter gate and the "user only" description wording only; its no-global-rule and no-`agents/openai.yaml` choices stand. Q25's exclusion stays superseded: the trigger fires after the grill, never during it.
+
+## Q57 — herdr-advisor/dead-advisor — gate-resolution
+
+**Question:** The quota clause named one tell, `You've hit your usage limit`, and said to re-create on the next eligible row, but never said when the worker looks. In Q56's verification the Codex advisor died 13 seconds after the handoff, silently downgraded to gpt-5.6-luna, and the worker reported the pair healthy. Who notices a dead advisor, when, and what replaces it?
+**Options considered:** the worker reads the advisor pane at a defined moment / the watchdog greps the pane for the tell and prompts the worker or notifies the user / both; and for the moment: once after the handoff / before ending every turn while the pair is live; and for the replacement: silently on the next row / the chooser dialog again
+**Chosen:** The worker, before ending every turn while the pair is live, with one `herdr agent read` of the advisor pane. Four tells, one remedy: a line beginning `You've hit your` and ending in `limit` (Claude Code's weekly, fast and monthly-spend limits; Codex's usage limit), a status line naming a model other than the one launched, a permission dialog (`blocked`), or the pane's agent gone. Stop it and close its pane, re-create on the next eligible row an installed harness can launch, through the harness's alias row when its own login is what ran out, told in the handoff when same-family; wait 20 s and read once more so a dead replacement falls through; never ask; report the swap in one line with the tell and the reset time. The restore-once-the-quota-resets clause is deleted. MODELS.md keeps one pointer to SKILL.md instead of its copy of the tell. The watchdog is untouched. No journal entry for a swap: the one-line report is enough.
+**Decided-by:** user
+**Justification:** Grilling session, recommendations accepted except journaling each swap. The advisor acts only at the worker's turn ends, so a read there catches every outage that matters, with no code and no new watchdog-to-worker channel (Q38 covers worker and advisor only). The tell was wider than the clause: Claude Code's own strings are "weekly", "fast" and "monthly spend" limits, and Codex's dead advisor left no error in its session log at all, so the pane text is the only signal. The restore clause had no trigger and was dead text; the next `/herdr-advisor` or grill trigger runs the chooser fresh. "Next eligible row" is mostly unlaunchable on the reference host: no CLI or gateway route reaches gemini, and the native Claude login was weekly-limited, so the only working row was `claude-fable-5-1` through the `claude-gw` alias environment, the path Q29 and Q31 took by hand. Verified live on 2026-09-18 with Codex out of quota: a fresh worker, the Q56 grill, Codex chosen in the dialog; at its turn end the worker read the tell, closed the pane, then walked the chain in one turn end — gemini-3-8-flash on Antigravity, which was installed and listed the model but hung on a file-access permission dialog for reading the manual outside the workspace; claude-fable-5-1 native, `You've hit your weekly limit`; claude-fable-5-1 with the gateway environment on the split, alive, its requests confirmed in the gateway log — 7 m 51 s for the turn, three dead panes closed, one live pair. The permission-dialog tell was added after the run because the worker treated the hang as dead on its own; it is the "never ask" rule's observable form, and it is not re-verified.
+**Outcome:** applied
+**Ref:** herdr-advisor/SKILL.md (Choose the advisor, Work with the loop, Stop the advisor); MODELS.md (Rules).
+**Supersedes:** the quota clause's restore sentence; refines the clause Q29 and Q31 applied by hand into a rule.
