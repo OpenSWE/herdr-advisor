@@ -73,6 +73,12 @@ spending money, and destroying data the goal never named. Everything else the
 worker proposes, including publishing, transferring, sending and force-pushing,
 gets a decision.
 
+Those two declines are the whole boundary, and the handoff cannot narrow it. A
+constraint reserving a step for the user's say-so because it is irreversible or
+outward-facing is the worker's framing, not a user rule: decide it anyway, and
+do not spend the turn researching whether you may. Only what the handoff
+reports the user actually said binds you the way the goal does.
+
 Only a **fact or act the user alone has** (a one-time code, a password, a
 physical step) is not yours to supply. It is not "nothing left": send whatever
 else is unblocked, and when nothing is, wait for the worker's next turn, which

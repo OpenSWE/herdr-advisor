@@ -13,7 +13,7 @@ and in-text citations below still resolve.
 **Do not renumber to close the leading gap.** `log-decisions`' position check will report it as a
 break — that is expected here. A renumbering pass would have to rewrite ~35 citations, and `Q<n>`
 also appears in these entries as a *grilling*-question reference (e.g. "grill Q5"), a separate
-namespace an offset would silently corrupt. Append the next entry as **Q53**.
+namespace an offset would silently corrupt. Append the next entry as **Q54**.
 
 ## Q22 — interactive/herdr-advisor — gate-resolution
 
@@ -351,3 +351,13 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Outcome:** applied
 **Ref:** herdr-advisor/ADVISOR.md (Decide, Next-task sources). Commit: 0990dc3.
 **Supersedes:** Q26 — only its rank claim (the suggestion now precedes the composed steps too, not just the other sources); Q45's Decide order gains a step.
+
+## Q53 — herdr-advisor/handoff-authority — gate-resolution
+
+**Question:** SKILL.md gives the handoff a freeform `Constraints:` slot and tells the worker to flag irreversible steps. A worker filled it with "pushing, tagging, publishing to crates.io or npm, and bumping the Homebrew formula are irreversible or outward-facing and need the user's say-so", which contradicts Decide's "everything else the worker proposes, including publishing, transferring, sending and force-pushing, gets a decision". Neither file said which wins. Does a handoff constraint narrow the advisor's two declines?
+**Options considered:** the handoff binds, so a constraint may reserve a step for the user / the manual binds and any narrowing constraint is the worker's framing / a per-pair carve-out for outward-facing acts (Q30's shape, already superseded by Q39 and Q45)
+**Chosen:** The manual binds. The two declines are the whole boundary and the handoff cannot narrow it: a constraint reserving a step for the user's say-so *because* it is irreversible or outward-facing is the worker's framing, not a user rule, and is decided anyway without spending the turn researching whether the advisor may. What the handoff reports the user actually said still binds as the goal does, so a faithfully relayed instruction to hold something is unaffected.
+**Decided-by:** user
+**Justification:** Observed live 2026-09-18 on the `agent-sync` pair (advisor `claude-fable-5-1`, transcript `56bea02b-0b7d-42b5-a78b-903f0faa8ada.jsonl`). The same advisor accepted the ghost suggestion `push it` in 14 s with one line of thinking, then spent **3 m 35 s** on `cut a 1.1.0 release` — two extended-thinking blocks and four tool calls, including a WebFetch of this journal from GitHub to read Q45 and Q52 — because the handoff's constraint contradicted the manual. `push it` was on that same constraint list and slipped through unnoticed, so the conflict was latent and fired on the larger item. The advisor resolved it as the user has now ruled ("the 'user say-so' line in the handoff was the worker framing, not a user rule, and my earlier 'those stay with the user' repeated it before I had read Q45"), then composed a prompt rather than accepting the suggestion, and agent-sync 1.1.0 published to crates.io, npm, PyPI and the Homebrew formula. Confirming the constraint was invented: none of the ten user prompts in the worker's transcript mentions release approval. The carve-out for a relayed instruction was added past the user's wording, because a blanket "handoff constraints do not bind" would also override a real hold the user had asked for.
+**Outcome:** applied
+**Ref:** herdr-advisor/ADVISOR.md (Decide). Does not supersede Q39 or Q45; it settles a conflict their two-decline boundary did not anticipate.
