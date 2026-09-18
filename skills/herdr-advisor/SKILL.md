@@ -136,6 +136,13 @@ Your side:
   knowingly.
 - **Journal the advisor's answers.** Where the project keeps a `DECISIONS.md`,
   record each call the advisor made for the user with `Decided-by: advisor`.
+  Never read an empty advisor pane as "the user": an accepted prompt suggestion
+  leaves no text there, and Claude Code logs every prompt as `human` whoever
+  sent it. `herdr agent get <your-pane-id>` settles it positively —
+  `composer.evidence.provenance` is `agent_prompt` when the advisor wrote the
+  text and `api` when it accepted your suggestion. `human` is also Herdr's
+  fallback when it has no evidence, so it proves nothing: while the pair is
+  live, an unattributed prompt is the advisor's.
 
 ## Stop the advisor
 
