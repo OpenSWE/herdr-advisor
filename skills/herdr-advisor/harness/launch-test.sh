@@ -50,7 +50,7 @@ case "$screen" in *ADVISOR-OK*) reply=ok ;; *) reply="no-reply(status=$s1)" ;; e
 sleep 25
 n_blocked=$(grep -c "\"pane\":\"$P\",\"action\":\"blocked\"" "$LOG" 2>/dev/null)
 set -- $(state); t2=$4; s2=$3
-# SKILL.md's stop recipe: clear the name, then Esc the running turn.
+# SKILL.md's stop recipe minus the close, which finish does: clear the name, then Esc the running turn.
 herdr agent rename "$P" --clear >/dev/null 2>&1
 herdr agent send-keys "$P" esc >/dev/null 2>&1
 herdr agent wait "$P" --timeout 60000 >/dev/null 2>&1

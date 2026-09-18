@@ -77,9 +77,9 @@ Four tells, one remedy: a line beginning `You've hit your` and ending in
 limit), a status line naming a model other than the one you launched (Codex
 downgrades silently, and its session log records no error), a permission
 dialog (`agent_status` is `blocked`), which nobody will answer, or the read
-failing because the pane's agent is gone. Stop it and close its pane (the
-recipe under *Stop the advisor*, then `herdr pane close`), and re-create it on
-the next eligible row of `MODELS.md` that an installed harness can launch;
+failing because the pane's agent is gone. Stop it by the recipe under *Stop
+the advisor*, and re-create it on the next eligible row of `MODELS.md` that an
+installed harness can launch;
 when the harness's own login is what ran out, launch through its alias row in
 `HARNESS-CLIS.md`; when the row shares your family, say so in the handoff so
 it spot-checks your claims against the code. After re-creating, wait 20 s and
@@ -154,7 +154,8 @@ Your side:
   answer.
 - **Say plainly what remains**: tasks, a question, a fact or act only the user
   can supply, or "nothing left". The advisor asks `what's next` once to
-  confirm before it ends.
+  confirm, then ends the pair through you: a `stop the advisor` prompt, from
+  your suggestion or as its own text, runs the recipe under *Stop the advisor*.
 - **Flag irreversible steps** (publishing a version, transferring or deleting a
   remote resource, sending a message, force-pushing over shared history,
   destroying untracked data, spending money), so the advisor decides them
@@ -177,18 +178,23 @@ Your side:
 The watchdog re-prompts every turn the advisor ends while its name carries the
 `-advisor` suffix, up to eight an hour, leaving alone a new turn started
 within 10 s; past the cap it releases the advisor and notifies the user. So
-`Esc` in its pane is not a stop. To end it, on the user's say-so or on a dead
-advisor's tell, by pane ID, since the name is gone after the first command:
+`Esc` in its pane is not a stop, and the advisor, being read-only, never stops
+itself: every stop is yours to run. Run it on a `stop the advisor` prompt
+whoever sent it (the user, or the advisor accepting your suggestion or sending
+the words itself, which its manual has it do at its end condition), and on a
+dead advisor's tell. By pane ID, since the name is gone after the first
+command:
 
 ```bash
 herdr agent rename <advisor-pane-id> --clear
 herdr agent send-keys <advisor-pane-id> esc
+herdr pane close <advisor-pane-id>
 ```
 
-The watchdog lets that turn end stand and exits, within a minute when the
-advisor was already idle; close the pane when the user wants it gone. An ended
-pair is re-created by the user's next `/herdr-advisor`, or by the grill
-trigger when a later grill ends; never by you otherwise.
+The close takes the pane, the advisor and its watchdog with it; the first two
+commands still end the loop if the close fails. An ended pair is re-created by
+the user's next `/herdr-advisor`, or by the grill trigger when a later grill
+ends; never by you otherwise.
 
 Why each rule exists: `DECISIONS.md`, Q22 onward —
 <https://github.com/OpenSWE/herdr-advisor/blob/main/DECISIONS.md>.

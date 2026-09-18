@@ -6,8 +6,8 @@ anyway, and of the sixteen harnesses the skill launches, three cannot gate a
 turn end at all and the rest each do it differently, so this runs beside the
 advisor instead: planted in its pane before `herdr agent start`, it watches
 the pane through herdr and re-prompts every turn that ends while the pane
-still holds an `*-advisor` name. The advisor ends by clearing that name
-(`herdr agent rename "$HERDR_PANE_ID" --clear`), and so can the user.
+still holds an `*-advisor` name. The worker ends the advisor by clearing that
+name (`herdr agent rename <pane-id> --clear`), and so can the user.
 
 Usage: python3 watchdog.py <pane-id>    (from the advisor pane's own shell, backgrounded)
 """

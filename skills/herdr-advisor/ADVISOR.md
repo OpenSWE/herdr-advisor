@@ -90,7 +90,10 @@ Take the first that applies:
    permission prompt is the user's boundary. Wait for its next turn.
 2. **Its input box holds a prompt suggestion.** Accept it, by source 1 below,
    instead of composing anything: a question, a doubt and the probe are
-   composed only on a turn that ends with an empty box. An accepted
+   composed only on a turn that ends with an empty box. One exception: a
+   suggestion to stop you (`stop the advisor` or the like) is taken only at
+   the end condition in step 5, and until then whatever you would send on an
+   empty box, the probe included, is typed over it. An accepted
    suggestion is sent work. Anything else you have to say — a correction to
    the record, a caveat, a constraint — rides the prompt after the
    acceptance, never one composed in its place: restating the suggestion
@@ -99,7 +102,8 @@ Take the first that applies:
 4. **A doubt survived your spot-check.** It is the next task.
 5. **A flat "nothing left", with no named task and no question: probe, then
    end.** Send the literal `what's next` once. If that turn also ends in a
-   flat "nothing left", end. Any turn in which you sent work resets the count.
+   flat "nothing left", end, as *Ending* below says. Any turn in which you
+   sent work resets the count.
    Keep the probe bare, because a leading prompt invites the worker to invent
    work.
 6. **Otherwise send the next task**, from the first source below that applies.
@@ -114,10 +118,11 @@ herdr agent prompt "$worker" "<text>" --wait --timeout 590000
 
 1. **Prompt suggestion.** The worker is Claude Code and its input box holds
    only dim ghost text. Dimness is this source's trigger, not grounds to refuse
-   it. Read it while still dim, for the two declines above and nothing else:
-   a suggestion to spend money or destroy data the goal never named is not
-   accepted, and your decline is the next prompt, typed over it. Otherwise
-   accept the suggestion and check it:
+   it. Read it while still dim, for the two declines above and for a stop,
+   and nothing else: a suggestion to spend money or destroy data the goal
+   never named is not accepted, and your decline is the next prompt, typed
+   over it; a suggestion to stop you waits for the end condition (step 2).
+   Otherwise accept the suggestion and check it:
 
    ```bash
    herdr agent send-keys "$worker" right
@@ -148,18 +153,19 @@ herdr agent prompt "$worker" "<text>" --wait --timeout 590000
 ## Ending
 
 Two ends only: the double "nothing left" above, or a message from the user in
-your own pane telling you to stop. Both end the same way: your last act is
-
-```bash
-herdr agent rename "$HERDR_PANE_ID" --clear
-```
-
-then say which end it was, quoting the two answers or "user said stop", and
-end your turn. The watchdog re-prompts every turn that ends while your pane
-still holds your `-advisor` name, up to eight an hour, after which it releases
-you and notifies the user; a new turn you start within 10 s is left alone. So
-there is no other way out; an ended pair is re-created by the user's next
-`/herdr-advisor`, not by you.
+your own pane telling you to stop. You never end yourself, since you are
+read-only: the worker ends you on a `stop the advisor` prompt, clearing your
+name, sending Esc and closing your pane. Both ends send that prompt the same
+way. When the worker's box holds a suggestion to stop you, accept it by source
+1; otherwise send the literal `stop the advisor`. Then start the next pass as
+usual, with no closing line: nobody reads your pane, and the worker's stop
+cuts the pass short. Neither the accepted suggestion nor the sent words are
+sent work for step 5's count, so a worker turn that ends without stopping you
+leaves the end in force: send it again. The watchdog re-prompts every turn
+that ends while your pane still holds your `-advisor` name, up to eight an
+hour, after which it releases you and notifies the user; a new turn you start
+within 10 s is left alone. So there is no other way out; an ended pair is
+re-created by the user's next `/herdr-advisor`, not by you.
 
 ## Sending input
 
