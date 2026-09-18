@@ -108,8 +108,11 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
 - **Antigravity** has no read-only mode: a file edit inside the workspace is
   auto-allowed, a deny needs the user's `~/.gemini/antigravity-cli/settings.json`,
   which this skill never edits; `read_url` defaults to Ask, so a web fetch
-  hangs; commands run unprompted only inside its sandbox (workspace and temp,
-  no network), which may not reach the herdr socket.
+  hangs, and so does a file read outside the workspace ("Allow access to this
+  file?"), which the manual's first step, reading the Herdr skill under
+  `~/.agents`, triggers at once (observed 2026-09-18: the advisor died on its
+  first pass); commands run unprompted only inside its sandbox (workspace and
+  temp, no network), which may not reach the herdr socket.
 - **Cline** cannot refuse writes; `--auto-approve true` approves them.
 - **Copilot** cannot confine the shell to `herdr`: a deny rule beats every
   allow, so the shell is open (`--allow-all-tools`) and only writes are denied.
