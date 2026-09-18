@@ -8,7 +8,8 @@ The worker does all the work and makes every change. The advisor is a **read-onl
 edits, it tells the worker what to change. A worker that stops with *"still waiting on your go"*
 gets `go` and keeps moving — which is the point. The pair runs while you are away.
 
-Invoked by the user only (`/herdr-advisor`), never on the agent's own judgment.
+Invoked by the user (`/herdr-advisor`); the agent invokes it itself in one case only: a grilling
+session ends, the user confirms a plan for it to execute, and no advisor pair is live.
 
 ## Install
 

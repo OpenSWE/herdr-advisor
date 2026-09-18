@@ -1,12 +1,19 @@
 ---
 name: herdr-advisor
-description: Pair a Herdr worker with one advisor, a stronger model that answers questions on the user's behalf to unblock the worker and leads it to its next task, by accepting its prompt suggestion or sending it text: a worker "still waiting on your go" gets `go`. Invoked by the user only.
-disable-model-invocation: true
+description: Pair a Herdr worker with one advisor, a stronger model that answers questions on the user's behalf to unblock the worker and leads it to its next task, by accepting its prompt suggestion or sending it text: a worker "still waiting on your go" gets `go`. Invoked by the user (`/herdr-advisor`), and by you in one case only, before the first step of the work and whatever the plan's size, when a grilling session has ended with its frontier empty, the user's confirmation has you execute the plan now, no advisor pair is live, and the confirmation did not decline one.
 ---
 
 # Herdr advisor
 
-Invoked by the user only (`/herdr-advisor`); never on your own judgment.
+Invoked by the user (`/herdr-advisor`), or by you in one case: a grilling
+session (the `grilling` skill, however it was entered) has just ended with its
+frontier empty, and the user's next message confirms the plan for you to
+execute in this session, with no `<worker-name>-advisor` live and no opt-out
+in the confirmation ("no advisor", "go alone", or the like). Then follow this
+file before the first step of the work: the chooser, the pair, the handoff. A
+pair already live means nothing to do; do not prompt it. Never on your own
+judgment otherwise: not during the grill, not on a plan-mode approval, not on
+a "go ahead" after a written plan.
 
 This file is the **worker's**. Advisor: your manual is `ADVISOR.md` in this
 directory; read that instead.
@@ -25,7 +32,10 @@ launches a separate agent process that drives the worker.
 
 Read `~/.agents/skills/herdr/SKILL.md` before operating on agents; this
 workflow authorizes that use of Herdr. Require `HERDR_ENV=1`: outside Herdr,
-tell the user and stop. Stay within the user's existing goal and permissions.
+tell the user and stop; on the grill trigger, say so in one line and proceed
+alone, as when no eligible model or CLI is installed or the advisor's model is
+at its quota. A trigger never stalls the work. Stay within the user's existing
+goal and permissions.
 Only a fact or act the user alone has (a one-time code, a password, a
 physical step) is the user's to answer; everything else, the advisor answers.
 
@@ -112,7 +122,8 @@ herdr agent prompt "$advisor" "<handoff>"
 > <Your first question, if you have one.>
 
 Name the spec by path or issue rather than retelling it; with no spec, state
-the goal.
+the goal. After a grill there is no spec: the goal is one line naming what the
+user confirmed you would do, never the plan restated.
 
 ## Work with the loop
 
@@ -158,8 +169,9 @@ herdr agent send-keys <advisor-pane-id> esc
 ```
 
 The watchdog lets that turn end stand and exits, within a minute when the
-advisor was already idle; close the pane when the user wants it gone. An
-ended pair is re-created by the user's next `/herdr-advisor`, not by you.
+advisor was already idle; close the pane when the user wants it gone. An ended
+pair is re-created by the user's next `/herdr-advisor`, or by the grill
+trigger when a later grill ends; never by you otherwise.
 
 Why each rule exists: `DECISIONS.md`, Q22 onward —
 <https://github.com/OpenSWE/herdr-advisor/blob/main/DECISIONS.md>.
