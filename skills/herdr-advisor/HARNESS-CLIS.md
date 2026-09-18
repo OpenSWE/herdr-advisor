@@ -26,22 +26,24 @@ arguments>`.
 
 | CLI | Herdr kind | Effort | Native arguments |
 |---|---|---|---|
-| Amp | `amp` | mode | `--mode <mode>` |
-| Antigravity | `agy` | `high` | `--effort <effort> --model <model-id>` |
-| Claude Code | `claude` | `max` | `--permission-mode dontAsk --disallowedTools Edit,Write,NotebookEdit --allowedTools "Bash(herdr:*) Read Grep Glob WebSearch WebFetch" --effort <effort> --model '<model-id>' --strict-mcp-config` |
-| Cline | `cline` | `xhigh` | `--auto-approve true -m <model-id> -P <provider> --thinking <effort>` with `CLINE_COMMAND_PERMISSIONS='{"allow":["herdr *"]}'` in the pane's environment |
-| Codex | `codex` | `max` | `-a never -c default_permissions="herdr-advisor" -c 'permissions.herdr-advisor.extends=":read-only"' -c 'permissions.herdr-advisor.network.enabled=true' -c "permissions.herdr-advisor.network.unix_sockets={\"$HERDR_SOCKET_PATH\"=\"allow\"}" --search -c model_reasoning_effort=<effort> -m <model-id>` plus one `-c mcp_servers.<name>.enabled=false` per server in `~/.codex/config.toml` (see below) |
-| Copilot † | `copilot` | `max` | `--allow-all-tools --deny-tool write --deny-tool memory --excluded-tools task --no-ask-user --disable-builtin-mcps --reasoning-effort <effort> --model <model-id>` |
-| Cursor | `cursor` | id | `--mode=ask --model <model-id>` |
-| Devin | `devin` | id | `--config ~/.agents/skills/herdr-advisor/harness/devin.json --model <model-id>` |
-| Grok Build | `grok` | `high` ‡ | `--permission-mode dontAsk --allow 'Bash(herdr *)' --allow Read --allow Grep --allow WebSearch --allow WebFetch --deny Edit --deny MCPTool --reasoning-effort <effort> -m <model-id>` |
-| Hermes | `hermes` | `ultra` | `--reasoning <effort> chat --yolo -t terminal,web --provider <provider> -m <model-id>` |
-| Kimi Code | `kimi` | config | `--auto --agent-file ~/.agents/skills/herdr-advisor/harness/kimi.md -m <model-id>` |
-| Kiro (one turn only, see Gaps) | `kiro` | `max` | `chat --agent herdr-advisor --effort <effort>`, after copying `harness/kiro.json` to `~/.kiro/agents/herdr-advisor.json` with its `model` field set to `<model-id>` (no model flag; the agent file carries it) |
-| oh-my-pi | `omp` | `max` | `--approval-mode write --config ~/.agents/skills/herdr-advisor/harness/omp.yml --tools read,grep,glob,bash,web_search --no-extensions -e ~/.omp/agent/extensions/herdr-omp-agent-state.ts --thinking=<effort> --model <model-id>` |
-| OpenCode | `opencode` | none | `-m <provider>/<model-id>` with `OPENCODE_CONFIG=~/.agents/skills/herdr-advisor/harness/opencode.json` in the pane's environment |
-| pi | `pi` | `max` | `--tools read,grep,find,ls,bash --no-extensions --thinking <effort> --model <provider>/<model-id>` |
-| Qoder | `qodercli` | `max` | `--permission-mode dont_ask --tools Read,Grep,Glob,Bash,WebSearch,WebFetch --allowed-tools 'Bash(herdr:*)' --strict-mcp-config --reasoning-effort <effort> -m <model-id>` |
+| [Amp](https://ampcode.com/docs/cli) | `amp` | mode | `--mode <mode>` |
+| [Antigravity](https://antigravity.google/docs/cli/overview/) | `agy` | `high` | `--effort <effort> --model <model-id>` |
+| [Claude Code](https://code.claude.com/docs/en/overview) | `claude` | `max` | `--permission-mode dontAsk --disallowedTools Edit,Write,NotebookEdit --allowedTools "Bash(herdr:*) Read Grep Glob WebSearch WebFetch" --effort <effort> --model '<model-id>' --strict-mcp-config` |
+| [Cline](https://cline.bot/cli) | `cline` | `xhigh` | `--auto-approve true -m <model-id> -P <provider> --thinking <effort>` with `CLINE_COMMAND_PERMISSIONS='{"allow":["herdr *"]}'` in the pane's environment |
+| [Codex](https://github.com/openai/codex) | `codex` | `max` | `-a never -c default_permissions="herdr-advisor" -c 'permissions.herdr-advisor.extends=":read-only"' -c 'permissions.herdr-advisor.network.enabled=true' -c "permissions.herdr-advisor.network.unix_sockets={\"$HERDR_SOCKET_PATH\"=\"allow\"}" --search -c model_reasoning_effort=<effort> -m <model-id>` plus one `-c mcp_servers.<name>.enabled=false` per server in `~/.codex/config.toml` (see below) |
+| [Copilot](https://github.com/features/copilot/cli) † | `copilot` | `max` | `--allow-all-tools --deny-tool write --deny-tool memory --excluded-tools task --no-ask-user --disable-builtin-mcps --reasoning-effort <effort> --model <model-id>` |
+| [Cursor](https://cursor.com/cli) | `cursor` | id | `--mode=ask --model <model-id>` |
+| [Devin](https://devin.ai/cli) | `devin` | id | `--config ~/.agents/skills/herdr-advisor/harness/devin.json --model <model-id>` |
+| [Grok Build](https://x.ai/build) | `grok` | `high` ‡ | `--permission-mode dontAsk --allow 'Bash(herdr *)' --allow Read --allow Grep --allow WebSearch --allow WebFetch --deny Edit --deny MCPTool --reasoning-effort <effort> -m <model-id>` |
+| [Hermes](https://hermes-agent.nousresearch.com/docs/user-guide/cli) | `hermes` | `ultra` | `--reasoning <effort> chat --yolo -t terminal,web --provider <provider> -m <model-id>` |
+| [Kimi Code](https://github.com/MoonshotAI/kimi-code) | `kimi` | config | `--auto --agent-file ~/.agents/skills/herdr-advisor/harness/kimi.md -m <model-id>` |
+| [Kiro](https://kiro.dev/cli/) (one turn only, see Gaps) | `kiro` | `max` | `chat --agent herdr-advisor --effort <effort>`, after copying `harness/kiro.json` to `~/.kiro/agents/herdr-advisor.json` with its `model` field set to `<model-id>` (no model flag; the agent file carries it) |
+| [oh-my-pi](https://github.com/can1357/oh-my-pi) | `omp` | `max` | `--approval-mode write --config ~/.agents/skills/herdr-advisor/harness/omp.yml --tools read,grep,glob,bash,web_search --no-extensions -e ~/.omp/agent/extensions/herdr-omp-agent-state.ts --thinking=<effort> --model <model-id>` |
+| [OpenCode](https://github.com/anomalyco/opencode) | `opencode` | none | `-m <provider>/<model-id>` with `OPENCODE_CONFIG=~/.agents/skills/herdr-advisor/harness/opencode.json` in the pane's environment |
+| [pi](https://github.com/earendil-works/pi) | `pi` | `max` | `--tools read,grep,find,ls,bash --no-extensions --thinking <effort> --model <provider>/<model-id>` |
+| [Qoder](https://qoder.com/en/cli) | `qodercli` | `max` | `--permission-mode dont_ask --tools Read,Grep,Glob,Bash,WebSearch,WebFetch --allowed-tools 'Bash(herdr:*)' --strict-mcp-config --reasoning-effort <effort> -m <model-id>` |
+
+zcode (<https://zcode.z.ai/cn>) has no row: Herdr has no `--kind` for it yet.
 
 Environment for a row: `herdr pane split ... --env KEY=VALUE` (repeatable)
 reaches the launched shell, so the CLI inherits it.

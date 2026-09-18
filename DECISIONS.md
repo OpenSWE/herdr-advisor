@@ -403,3 +403,13 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Outcome:** applied
 **Ref:** herdr-advisor/SKILL.md (Choose the advisor, Work with the loop, Stop the advisor); MODELS.md (Rules).
 **Supersedes:** the quota clause's restore sentence; refines the clause Q29 and Q31 applied by hand into a rule.
+
+## Q58 — herdr-advisor/links — interpretation
+
+**Question:** The user asked for a URL per CLI in `HARNESS-CLIS.md` and three URLs in `SKILL.md` (DeepSWE, Claude Code's advisor tool, Codex auto-review). Where does each go, and what of zcode, which is on the list but has no row?
+**Options considered:** a Links section at the end of each file / the URL on the table's CLI name and in the sentence that already names the thing / a zcode table row / a zcode note
+**Chosen:** On the name: the table's first column links the CLI (markers and parentheticals stay outside the link text), and the three SKILL.md URLs ride the sentences that already name the advisor tool, auto-review and the ranking. zcode is one sentence after the table, not a row: Herdr has no `--kind` for it, and the file defines a row as a CLI Herdr can start.
+**Decided-by:** user
+**Justification:** A link beside its name is reached where the reader meets the name; a trailing section is a second list to keep in step with the table. Codex auto-review was named only in Q24 until now; it joins the "Unrelated to" paragraph because it and `--advisor` are the same shape, a second model in the user's seat inside the harness, which is what this skill is not. The DeepSWE link duplicates `MODELS.md`'s, at the user's request. All twenty URLs resolved on 2026-09-18 (`x.ai/build` answers 403 to curl only).
+**Outcome:** applied
+**Ref:** herdr-advisor/HARNESS-CLIS.md (table, zcode note); SKILL.md (Herdr advisor, Choose the advisor).

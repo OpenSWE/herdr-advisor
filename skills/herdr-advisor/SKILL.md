@@ -18,8 +18,11 @@ a "go ahead" after a written plan.
 This file is the **worker's**. Advisor: your manual is `ADVISOR.md` in this
 directory; read that instead.
 
-Unrelated to Claude Code's built-in advisor tool (`--advisor`): this skill
-launches a separate agent process that drives the worker.
+Unrelated to Claude Code's built-in advisor tool (`--advisor`,
+<https://code.claude.com/docs/en/advisor>) and to Codex auto-review
+(<https://learn.chatgpt.com/docs/sandboxing/auto-review>), a reviewer model that
+judges permission prompts: this skill launches a separate agent process that
+drives the worker.
 
 ## Roles
 
@@ -42,8 +45,9 @@ physical step) is the user's to answer; everything else, the advisor answers.
 ## Choose the advisor
 
 Two files in this directory settle the choice: `MODELS.md` ranks the models
-and says which are eligible for your worker; `HARNESS-CLIS.md` says how each
-coding-agent CLI launches one, with the effort rung and the arguments.
+by DeepSWE (<https://deepswe.datacurve.ai/>) and says which are eligible for
+your worker; `HARNESS-CLIS.md` says how each coding-agent CLI launches one, with
+the effort rung and the arguments.
 
 **Your own model.** `herdr pane process-info --pane <your-pane-id>` shows your
 command line; read your model and effort from it by the flags in your CLI's
