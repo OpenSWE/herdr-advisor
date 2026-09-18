@@ -435,3 +435,13 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Outcome:** applied
 **Ref:** herdr-advisor/ADVISOR.md (Ending); watchdog.py (docstring); harness/launch-test.sh (comment).
 **Supersedes:** Q47's framing of the end signal as the advisor's own act, carried into Q50's port; the signal itself, the name clear, is unchanged.
+
+## Q61 — herdr-advisor/agy-gap — interpretation
+
+**Question:** The Q59 worker reported one finding outside its confirmed scope: the Antigravity row's Gaps bullet names the `read_url` prompt but not the file-access prompt for a path outside the workspace, which killed the first advisor of that session on its first pass. Record it, or leave the row as it was?
+**Options considered:** leave it, the row is launchable and the dead-advisor swap handled it / add one clause to the existing Antigravity Gaps bullet / drop the row
+**Chosen:** One clause in the existing bullet: a file read outside the workspace asks too, and the manual's first step, reading the Herdr skill under `~/.agents`, triggers it at once.
+**Decided-by:** advisor — it accepted the worker's prompt suggestion (`composer.evidence.provenance` read `api`).
+**Justification:** A worker choosing agy from the chooser would otherwise learn the tell only by launching; the Gaps list exists so the worker chooses knowing. The row stays, since the dead-advisor swap recovers the pair in under a minute and a user with non-workspace reads allowed in their own Antigravity settings can still use it.
+**Outcome:** applied
+**Ref:** herdr-advisor/HARNESS-CLIS.md (Gaps, Antigravity). Commit: 2265ec4.
