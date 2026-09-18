@@ -154,4 +154,5 @@ The watchdog lets that turn end stand and exits, within a minute when the
 advisor was already idle; close the pane when the user wants it gone. An
 ended pair is re-created by the user's next `/herdr-advisor`, not by you.
 
-Why each rule exists: `~/github.com/soulmachine/skills/DECISIONS.md`, Q22 onward.
+Why each rule exists: `DECISIONS.md`, Q22 onward —
+<https://github.com/OpenSWE/herdr-advisor/blob/main/DECISIONS.md>.

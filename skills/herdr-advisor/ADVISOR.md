@@ -163,4 +163,5 @@ there is no other way out; an ended pair is re-created by the user's next
   procedure before concluding that it holds no question, invitation, task list
   or "nothing left".
 
-Why each rule exists: `~/github.com/soulmachine/skills/DECISIONS.md`, Q22 onward.
+Why each rule exists: `DECISIONS.md`, Q22 onward —
+<https://github.com/OpenSWE/herdr-advisor/blob/main/DECISIONS.md>.

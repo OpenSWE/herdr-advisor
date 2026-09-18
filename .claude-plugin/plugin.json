@@ -1,0 +1,10 @@
+{
+  "name": "herdr-advisor",
+  "version": "1.0.0",
+  "description": "Pair a Herdr worker with one advisor — a stronger model that answers the worker's questions on the user's behalf to unblock it and leads it to its next task, kept alive by an out-of-harness watchdog.",
+  "author": { "name": "soulmachine" },
+  "homepage": "https://github.com/OpenSWE/herdr-advisor",
+  "repository": "https://github.com/OpenSWE/herdr-advisor",
+  "license": "MIT",
+  "keywords": ["herdr", "advisor", "agents", "multi-agent", "afk", "autonomy", "terminal"]
+}

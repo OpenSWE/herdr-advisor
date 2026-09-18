@@ -116,7 +116,8 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
 - **Devin** has no mode that both refuses edits and skips prompts: a `deny`
   on `exec` would also block `herdr`, so a shell command other than `herdr`
   prompts and hangs; `harness/devin.json` denies edits and MCP, allows reads
-  and fetches.
+  and fetches. Set its `org_id` to your own before first use — the committed
+  value is a `<your-devin-org-id>` placeholder.
 - **Hermes** drops the `file` toolset, but the terminal can still write and
   runs any command; `--yolo` skips the dangerous-command prompt, which would
   otherwise hang, so like amp, cline, kimi and copilot the row chooses
@@ -142,7 +143,10 @@ permissions (`--dangerously-skip-permissions`, `--yolo`, `--auto-approve`,
 `--approve`, `--trust-all-tools`), keep its environment through `pane split
 --env`, and append the row's arguments. An alias that sets only permission
 flags and effort (`claude-yolo`, `codex-yolo`, `pi-yolo`, …) is its bare CLI
-row. Detected on the reference host with more than that:
+row. The table below is the reference host's own set, kept as a worked
+example of the shape — yours will differ. Read it for *how* to resolve a
+wrapper into a CLI plus arguments, not as a setup to reproduce; `cliproxy`
+there is one machine's local gateway, not a requirement of this skill:
 
 | Alias / wrapper | CLI | Sets | Model |
 |---|---|---|---|

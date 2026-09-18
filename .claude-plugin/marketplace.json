@@ -1,0 +1,15 @@
+{
+  "name": "herdr-advisor",
+  "description": "Marketplace for the herdr-advisor plugin — pair a Herdr worker with a stronger advisor model that unblocks it and leads it to its next task.",
+  "owner": { "name": "soulmachine" },
+  "plugins": [
+    {
+      "name": "herdr-advisor",
+      "source": "./",
+      "description": "Pair a Herdr worker with one advisor — a stronger model that answers the worker's questions on the user's behalf to unblock it and leads it to its next task, kept alive by an out-of-harness watchdog.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["herdr", "advisor", "multi-agent", "afk"]
+    }
+  ]
+}
