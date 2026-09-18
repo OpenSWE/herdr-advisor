@@ -13,7 +13,7 @@ and in-text citations below still resolve.
 **Do not renumber to close the leading gap.** `log-decisions`' position check will report it as a
 break — that is expected here. A renumbering pass would have to rewrite ~35 citations, and `Q<n>`
 also appears in these entries as a *grilling*-question reference (e.g. "grill Q5"), a separate
-namespace an offset would silently corrupt. Append the next entry as **Q55**.
+namespace an offset would silently corrupt. Append the next entry as **Q56**.
 
 ## Q22 — interactive/herdr-advisor — gate-resolution
 
@@ -371,3 +371,13 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Justification:** Measured on the `agent-sync` pair, 2026-09-18. Claude Code cannot settle it: `origin.kind` is `human` for all ten prompts in the worker's transcript, including the advisor's composed `herdr agent prompt` (L1537, L1793) and its accepted suggestions (L467, L1734), because the keystrokes arrive through the PTY. `promptSource` separates `typed` from `suggestion_accepted` but not who accepted — `suggestion_accepted` fired at 09:50 for a suggestion the *user* took, 48 minutes before the advisor existed. Herdr does settle it, one way: the composer attempt created at 10:52:40, the instant of the advisor's right arrow, reads `api`, and a `herdr agent prompt` reads `agent_prompt` (`evertranscript-advisor`, 10:49:57). `human` is Herdr's no-evidence fallback, not a detection: at 11:01:39 agent-sync's box spawned a fresh `human` attempt mid-turn with no user input and `cursor`, `region` and `style` all `unavailable` — hence the positive-values-only reading and the default. `composer` describes the live input box, not the submitted prompt: it held the right attempt for the whole 10:52:58–10:55:28 turn and was overwritten later, so it is read at turn start. Having the advisor announce its acceptances was left for a possible ADVISOR.md change; it would not repair a worker whose handoff predates it.
 **Outcome:** applied
 **Ref:** herdr-advisor/SKILL.md (Work with the loop, the journal bullet). Commit: 376fdc4.
+
+## Q55 — herdr-advisor/accept-then-correct — gate-resolution
+
+**Question:** Decide step 2 bars composing "a question, a doubt and the probe" while the box holds a suggestion. An advisor that also had a correction to deliver read that list as exhaustive, composed a prompt over the suggestion rather than accepting it, and re-specified the task in the process. Is a correction a fourth forbidden thing, or does step 2 need a path for it?
+**Options considered:** name the correction a fourth forbidden item / let a correction justify composing over the suggestion, as the advisor did / accept the suggestion, then send the correction as the next prompt
+**Chosen:** The third. Step 2 keeps its bar on composing in the suggestion's place, and adds that anything else the advisor has to say — a correction to the record, a caveat, a constraint — rides the prompt *after* the acceptance, with the reason named: restating the suggestion invites the worker to re-plan it wider than it asked.
+**Decided-by:** user
+**Justification:** The corrections were legitimate, so forbidding them outright would lose real information; what cost more than a one-turn delay was composing in their place. The suggestion was four words, `cut a 1.1.0 release`; the prompt composed over it specified nine — runbook, version bump, `verify-packaging.sh`, commit, tag, push the tag, watch the workflow, journal, notify the peer — and agent-sync 1.1.0 published to crates.io, npm, PyPI and the Homebrew formula in that one turn. Source 2 already warns that restating a worker's own offer invites re-planning; step 2 now says the same where the text is Claude Code's guess at the user's reply. The delay is cheap in the observed case: the correction concerned the *previous* push's attribution (Q54), not the release, so it lost nothing by arriving a turn later. This is the third and last finding from the 2026-09-18 `agent-sync` pair, with Q53 (the stall) and Q54 (the misattribution it was correcting).
+**Outcome:** applied
+**Ref:** herdr-advisor/ADVISOR.md (Decide, step 2). Refines Q52, which set step 2 and named the three composed things; it does not disturb the two declines or the source 1 recipe.

@@ -91,7 +91,10 @@ Take the first that applies:
 2. **Its input box holds a prompt suggestion.** Accept it, by source 1 below,
    instead of composing anything: a question, a doubt and the probe are
    composed only on a turn that ends with an empty box. An accepted
-   suggestion is sent work.
+   suggestion is sent work. Anything else you have to say — a correction to
+   the record, a caveat, a constraint — rides the prompt after the
+   acceptance, never one composed in its place: restating the suggestion
+   invites the worker to re-plan it wider than it asked.
 3. **It asked a question.** Answer it directly, as its next prompt.
 4. **A doubt survived your spot-check.** It is the next task.
 5. **A flat "nothing left", with no named task and no question: probe, then
