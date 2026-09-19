@@ -110,7 +110,8 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
 
 - **Amp** never asks and never refuses: it has no permission system, no model
   flag, and its only settings file (`--settings-file`) replaces the user's own,
-  so the advisor can write and run anything.
+  so the advisor can write and run anything. It heads the rows that choose
+  never-ask over never-write: amp, agy, cline, devin and kimi.
 - **Antigravity** approves everything: it has no silent deny short of the
   user's `~/.gemini/antigravity-cli/settings.json`, which this skill never
   edits, and without `--dangerously-skip-permissions` three things ask and
@@ -138,10 +139,10 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
   shell setup; `--respect-workspace-trust false` skips the trust check. Set
   its `org_id` to your own before first use — the committed value is a
   `<your-devin-org-id>` placeholder.
-- **Hermes** drops the `file` toolset, but the terminal can still write and
-  runs any command; `--yolo` skips the dangerous-command prompt, which would
-  otherwise hang, so like amp, agy, cline, devin and kimi the row chooses
-  never-ask over never-write.
+- **Hermes**'s shell is open: the row drops the `file` toolset, so it keeps
+  never-write by tool, but the terminal runs any command, redirection
+  included, and `--yolo` skips the dangerous-command prompt, which would
+  otherwise hang.
 - **Kimi Code** `--auto` approves everything the agent file leaves enabled, so
   the shell is open; effort is config-only (`[thinking] effort`), not a flag.
 - **Kiro** has no Herdr integration to install, so `turn` stays 0 in `herdr
