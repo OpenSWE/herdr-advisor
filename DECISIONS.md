@@ -456,3 +456,13 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Outcome:** applied
 **Ref:** herdr-advisor/HARNESS-CLIS.md (intro, Antigravity, Cursor and Devin rows, Launch notes: Cursor, Gaps: Antigravity, Cursor, Devin, Hermes; Aliases and wrappers); SKILL.md (Create or reuse the advisor); harness/devin.json; harness/launch-test.sh. Commit: 3abbda2.
 **Supersedes:** Q61's Gaps clause on the outside-workspace read, now the reason for the flag rather than a standing gap.
+
+## Q63 — herdr-advisor/copilot-list — interpretation
+
+**Question:** The advisor's spot-check of the Q62 Gaps: the Hermes entry listed copilot among the rows that choose never-ask over never-write, while the Copilot entry says only its writes are denied and its gap is the open shell. Which entry is wrong?
+**Options considered:** drop copilot from the Hermes list / fix the Copilot entry instead
+**Chosen:** Dropped from the list. The Copilot entry stands: `copilot help permissions` defines the `write` category the row denies as "tools that create and modify files, except shell tool invocations", so the row keeps never-write by tool and its only gap is the shell it cannot confine to `herdr`.
+**Decided-by:** advisor — sent as its own text (`composer.evidence.provenance` read `agent_prompt`).
+**Justification:** The list predates Q62 and read an open shell as giving up never-write, since a shell can write by redirection; the Copilot entry reads the two capabilities apart, and the eight-capability intro lists them apart, so the entry's reading is the file's. Hermes's own membership rests on the other reading ("the terminal can still write"), and is left as the advisor found it.
+**Outcome:** applied
+**Ref:** herdr-advisor/HARNESS-CLIS.md (Gaps, Hermes). Commit: 0ab685d.
