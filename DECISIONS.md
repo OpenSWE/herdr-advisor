@@ -466,3 +466,14 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Justification:** The list predates Q62 and read an open shell as giving up never-write, since a shell can write by redirection; the Copilot entry reads the two capabilities apart, and the eight-capability intro lists them apart, so the entry's reading is the file's. Hermes's own membership rests on the other reading ("the terminal can still write"), and is left as the advisor found it.
 **Outcome:** applied
 **Ref:** herdr-advisor/HARNESS-CLIS.md (Gaps, Hermes). Commit: 0ab685d.
+
+## Q64 — herdr-advisor/hermes-list — interpretation
+
+**Question:** Q63 read Copilot's denied write category as keeping never-write, with the open shell as its gap, and left Hermes on the other reading, that a terminal which can write by redirection gives up never-write. Does the Copilot reading apply to Hermes too, and where does the roll call of rows that choose never-ask over never-write live once Hermes leaves it?
+**Options considered:** leave Hermes as found / apply the Copilot reading to Hermes and keep the roll call in the Amp entry / drop the roll call
+**Chosen:** Applied. The Hermes entry now says its shell is open: dropping the `file` toolset keeps never-write by tool, the terminal runs any command, redirection included, and `--yolo` skips the dangerous-command prompt that would otherwise hang. The roll call (amp, agy, cline, devin, kimi) moved to the Amp entry, which heads it.
+**Decided-by:** advisor — sent as its own text (`composer.evidence.provenance` read `agent_prompt`).
+**Justification:** The intro lists never-write and the confined shell as separate capabilities, so one reading has to hold across the Gaps; Q63 chose it for Copilot and Hermes was the last entry on the other. Amp is the extreme case and first alphabetically, so the list reads as a family there rather than as a clause on one member.
+**Outcome:** applied
+**Ref:** herdr-advisor/HARNESS-CLIS.md (Gaps, Amp and Hermes). Commit: 03ff7f3.
+**Supersedes:** Q63's clause leaving Hermes as found.
