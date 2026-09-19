@@ -1,8 +1,4 @@
 {
-  "permissions": {
-    "allow": ["read", "grep", "glob", "Exec(herdr)", "Fetch(https://*/*)"],
-    "deny": ["edit", "mcp__*"]
-  },
   "version": 1,
   "devin": {
     "org_id": "<your-devin-org-id>"

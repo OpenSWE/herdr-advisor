@@ -8,8 +8,11 @@ launching. Which model to run is a separate choice: `MODELS.md`.
 Every row aims at the same eight capabilities: never ask (nobody watches the
 pane, so a prompt is a hang); never write; read files; run `herdr` and nothing
 else; reach the web; think at `<effort>`; pin `<model-id>`; carry no MCP tools.
-Where a CLI's flags cannot deliver one, the **Gaps** list says so; the row is
-still launchable, and the worker chooses knowing it.
+Never ask comes first: a row takes the narrowest configuration that never
+prompts, a workspace-trust dialog included, keeping a silent refusal of writes
+where the CLI has one and taking its approve-all mode where it has none.
+Where a CLI's flags cannot deliver a capability, the **Gaps** list says so;
+the row is still launchable, and the worker chooses knowing it.
 
 `<model-id>` is the id from `MODELS.md` in the CLI's own spelling. `<effort>`
 is the row's effort, or the CLI's top rung when it ends lower; the Effort
@@ -27,13 +30,13 @@ arguments>`.
 | CLI | Herdr kind | Effort | Native arguments |
 |---|---|---|---|
 | [Amp](https://ampcode.com/docs/cli) | `amp` | mode | `--mode <mode>` |
-| [Antigravity](https://antigravity.google/docs/cli/overview/) | `agy` | `high` | `--effort <effort> --model <model-id>` |
+| [Antigravity](https://antigravity.google/docs/cli/overview/) | `agy` | `high` | `--dangerously-skip-permissions --effort <effort> --model <model-id>` |
 | [Claude Code](https://code.claude.com/docs/en/overview) | `claude` | `max` | `--permission-mode dontAsk --disallowedTools Edit,Write,NotebookEdit --allowedTools "Bash(herdr:*) Read Grep Glob WebSearch WebFetch" --effort <effort> --model '<model-id>' --strict-mcp-config` |
 | [Cline](https://cline.bot/cli) | `cline` | `xhigh` | `--auto-approve true -m <model-id> -P <provider> --thinking <effort>` with `CLINE_COMMAND_PERMISSIONS='{"allow":["herdr *"]}'` in the pane's environment |
 | [Codex](https://github.com/openai/codex) | `codex` | `max` | `-a never -c default_permissions="herdr-advisor" -c 'permissions.herdr-advisor.extends=":read-only"' -c 'permissions.herdr-advisor.network.enabled=true' -c "permissions.herdr-advisor.network.unix_sockets={\"$HERDR_SOCKET_PATH\"=\"allow\"}" --search -c model_reasoning_effort=<effort> -m <model-id>` plus one `-c mcp_servers.<name>.enabled=false` per server in `~/.codex/config.toml` (see below) |
 | [Copilot](https://github.com/features/copilot/cli) † | `copilot` | `max` | `--allow-all-tools --deny-tool write --deny-tool memory --excluded-tools task --no-ask-user --disable-builtin-mcps --reasoning-effort <effort> --model <model-id>` |
-| [Cursor](https://cursor.com/cli) | `cursor` | id | `--mode=ask --model <model-id>` |
-| [Devin](https://devin.ai/cli) | `devin` | id | `--config ~/.agents/skills/herdr-advisor/harness/devin.json --model <model-id>` |
+| [Cursor](https://cursor.com/cli) | `cursor` | id | `--mode=ask -f --trust --model <model-id>` |
+| [Devin](https://devin.ai/cli) | `devin` | id | `--config ~/.agents/skills/herdr-advisor/harness/devin.json --permission-mode bypass --respect-workspace-trust false --model <model-id>` |
 | [Grok Build](https://x.ai/build) | `grok` | `high` ‡ | `--permission-mode dontAsk --allow 'Bash(herdr *)' --allow Read --allow Grep --allow WebSearch --allow WebFetch --deny Edit --deny MCPTool --reasoning-effort <effort> -m <model-id>` |
 | [Hermes](https://hermes-agent.nousresearch.com/docs/user-guide/cli) | `hermes` | `ultra` | `--reasoning <effort> chat --yolo -t terminal,web --provider <provider> -m <model-id>` |
 | [Kimi Code](https://github.com/MoonshotAI/kimi-code) | `kimi` | config | `--auto --agent-file ~/.agents/skills/herdr-advisor/harness/kimi.md -m <model-id>` |
@@ -83,6 +86,9 @@ interactive run dismisses it for good
 `GITHUB_TOKEN` (`ghp_`) in the environment it refuses the token, and without
 one the organization's Copilot policy denies access.
 
+**Cursor.** On a free plan every named model, the config's default included,
+fails with `Named models unavailable`, so `<model-id>` there is `auto`.
+
 **Devin.** `--model` needs a paid plan: on a free account every listed id,
 even `swe-1-6`, exits with `Upgrade to Pro to access this model`, so drop the
 flag there and take the account's default.
@@ -105,28 +111,37 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
 - **Amp** never asks and never refuses: it has no permission system, no model
   flag, and its only settings file (`--settings-file`) replaces the user's own,
   so the advisor can write and run anything.
-- **Antigravity** has no read-only mode: a file edit inside the workspace is
-  auto-allowed, a deny needs the user's `~/.gemini/antigravity-cli/settings.json`,
-  which this skill never edits; `read_url` defaults to Ask, so a web fetch
-  hangs, and so does a file read outside the workspace ("Allow access to this
-  file?"), which the manual's first step, reading the Herdr skill under
-  `~/.agents`, triggers at once (observed 2026-09-18: the advisor died on its
-  first pass); commands run unprompted only inside its sandbox (workspace and
-  temp, no network), which may not reach the herdr socket.
+- **Antigravity** approves everything: it has no silent deny short of the
+  user's `~/.gemini/antigravity-cli/settings.json`, which this skill never
+  edits, and without `--dangerously-skip-permissions` three things ask and
+  hang: a file read outside the workspace ("Allow access to this file?"),
+  which the manual's first step, reading the Herdr skill under `~/.agents`,
+  triggers at once (2026-09-18: an advisor died on its first pass); a
+  `read_url`; and a command outside its sandbox. With the flag, the probe's
+  outside read, both commands and the write ran unprompted in an untrusted
+  directory with `allowNonWorkspaceAccess` off, and no diff review held the
+  write.
 - **Cline** cannot refuse writes; `--auto-approve true` approves them.
 - **Copilot** cannot confine the shell to `herdr`: a deny rule beats every
   allow, so the shell is open (`--allow-all-tools`) and only writes are denied.
-- **Cursor** `--mode=ask` is read-only and still runs `herdr` (verified);
-  without `-f`, any other shell command prompts and hangs.
-- **Devin** has no mode that both refuses edits and skips prompts: a `deny`
-  on `exec` would also block `herdr`, so a shell command other than `herdr`
-  prompts and hangs; `harness/devin.json` denies edits and MCP, allows reads
-  and fetches. Set its `org_id` to your own before first use — the committed
-  value is a `<your-devin-org-id>` placeholder.
+- **Cursor**'s shell is open: `-f` force-allows every command, and without
+  it any command other than `herdr` prompts and hangs. `--mode=ask` still
+  refuses writes silently under it ("Ask mode blocks file edits", verified
+  2026-09-18, the outside read and both commands unprompted), and `--trust`
+  skips the workspace prompt, so the row asks for nothing.
+- **Devin** approves everything: `--permission-mode bypass` is its only
+  never-ask mode, and a `deny` in a `--config` file neither refuses silently
+  outside it (a write under `deny: ["edit"]` stopped at `Writing
+  ./advisor-probe.txt` with `1 Yes (Approve once) … 4 No`, verified
+  2026-09-18) nor survives it (under bypass the probe wrote the file), so
+  `harness/devin.json` carries no rules, only the org id and the finished
+  shell setup; `--respect-workspace-trust false` skips the trust check. Set
+  its `org_id` to your own before first use — the committed value is a
+  `<your-devin-org-id>` placeholder.
 - **Hermes** drops the `file` toolset, but the terminal can still write and
   runs any command; `--yolo` skips the dangerous-command prompt, which would
-  otherwise hang, so like amp, cline, kimi and copilot the row chooses
-  never-ask over never-write.
+  otherwise hang, so like amp, agy, cline, devin, kimi and copilot the row
+  chooses never-ask over never-write.
 - **Kimi Code** `--auto` approves everything the agent file leaves enabled, so
   the shell is open; effort is config-only (`[thinking] effort`), not a flag.
 - **Kiro** has no Herdr integration to install, so `turn` stays 0 in `herdr
@@ -143,12 +158,13 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
 
 A shell alias or wrapper is a launch recipe (environment plus arguments) and
 belongs here, under the CLI it wraps; MODELS.md stays a rank table. To use
-one, resolve it to its CLI and arguments, drop every flag that widens
-permissions (`--dangerously-skip-permissions`, `--yolo`, `--auto-approve`,
-`--approve`, `--trust-all-tools`), keep its environment through `pane split
---env`, and append the row's arguments. An alias that sets only permission
-flags and effort (`claude-yolo`, `codex-yolo`, `pi-yolo`, …) is its bare CLI
-row. The table below is the reference host's own set, kept as a worked
+one, resolve it to its CLI and arguments, drop the wrapper's own permission
+flags (`--dangerously-skip-permissions`, `--yolo`, `--auto-approve`,
+`--approve`, `--trust-all-tools`), since the row supplies the mode, keep its
+environment through `pane split --env`, and append the row's arguments. An
+alias that sets only permission flags and effort (`claude-yolo`,
+`codex-yolo`, `pi-yolo`, …) is its bare CLI row. The table below is the
+reference host's own set, kept as a worked
 example of the shape — yours will differ. Read it for *how* to resolve a
 wrapper into a CLI plus arguments, not as a setup to reproduce; `cliproxy`
 there is one machine's local gateway, not a requirement of this skill:

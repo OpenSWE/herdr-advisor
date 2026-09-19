@@ -117,8 +117,8 @@ the shell's ownership check, and fires about half the time even after the
 3 s: wait 2 s and retry.
 
 **The advisor never asks.** Nobody watches its pane, so a permission prompt is
-a hang, not a safeguard. Every row runs in a deny-and-carry-on mode; keep it
-there.
+a hang, not a safeguard. Every row runs in a mode that never prompts, refusing
+or approving; keep it there.
 
 ## Hand off
 
