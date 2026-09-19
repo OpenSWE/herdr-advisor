@@ -140,8 +140,8 @@ on the reference host oh-my-openagent drops an `.omo/` directory and a
   `<your-devin-org-id>` placeholder.
 - **Hermes** drops the `file` toolset, but the terminal can still write and
   runs any command; `--yolo` skips the dangerous-command prompt, which would
-  otherwise hang, so like amp, agy, cline, devin, kimi and copilot the row
-  chooses never-ask over never-write.
+  otherwise hang, so like amp, agy, cline, devin and kimi the row chooses
+  never-ask over never-write.
 - **Kimi Code** `--auto` approves everything the agent file leaves enabled, so
   the shell is open; effort is config-only (`[thinking] effort`), not a flag.
 - **Kiro** has no Herdr integration to install, so `turn` stays 0 in `herdr
