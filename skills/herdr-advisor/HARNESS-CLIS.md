@@ -33,7 +33,7 @@ arguments>`.
 | [Antigravity](https://antigravity.google/docs/cli/overview/) | `agy` | `high` | `--dangerously-skip-permissions --effort <effort> --model <model-id>` |
 | [Claude Code](https://code.claude.com/docs/en/overview) | `claude` | `max` | `--permission-mode dontAsk --disallowedTools Edit,Write,NotebookEdit --allowedTools "Bash(herdr:*) Read Grep Glob WebSearch WebFetch" --effort <effort> --model '<model-id>' --strict-mcp-config` |
 | [Cline](https://cline.bot/cli) | `cline` | `xhigh` | `--auto-approve true -m <model-id> -P <provider> --thinking <effort>` with `CLINE_COMMAND_PERMISSIONS='{"allow":["herdr *"]}'` in the pane's environment |
-| [Codex](https://github.com/openai/codex) | `codex` | `max` | `-a never -c default_permissions="herdr-advisor" -c 'permissions.herdr-advisor.extends=":read-only"' -c 'permissions.herdr-advisor.network.enabled=true' -c "permissions.herdr-advisor.network.unix_sockets={\"$HERDR_SOCKET_PATH\"=\"allow\"}" --search -c model_reasoning_effort=<effort> -m <model-id>` plus one `-c mcp_servers.<name>.enabled=false` per server in `~/.codex/config.toml` (see below) |
+| [Codex](https://github.com/openai/codex) | `codex` | `max` | `-a never -c default_permissions="herdr-advisor" -c 'permissions.herdr-advisor.extends=":read-only"' -c 'permissions.herdr-advisor.network.enabled=true' -c "permissions.herdr-advisor.network.unix_sockets={\"$HERDR_SOCKET_PATH\"=\"allow\"}" -c 'shell_environment_policy.set.HERDR_ENV="1"' -c "shell_environment_policy.set.HERDR_SOCKET_PATH=\"$HERDR_SOCKET_PATH\"" --search -c model_reasoning_effort=<effort> -m <model-id>` plus one `-c mcp_servers.<name>.enabled=false` per server in `~/.codex/config.toml` (see below) |
 | [Copilot](https://github.com/features/copilot/cli) † | `copilot` | `max` | `--allow-all-tools --deny-tool write --deny-tool memory --excluded-tools task --no-ask-user --disable-builtin-mcps --reasoning-effort <effort> --model <model-id>` |
 | [Cursor](https://cursor.com/cli) | `cursor` | id | `--mode=ask -f --trust --model <model-id>` |
 | [Devin](https://devin.ai/cli) | `devin` | id | `--config ~/.agents/skills/herdr-advisor/harness/devin.json --permission-mode bypass --respect-workspace-trust false --model <model-id>` |
@@ -69,6 +69,14 @@ grep -oE '^\[mcp_servers\.[A-Za-z0-9_-]+\]$' ~/.codex/config.toml \
 Splice the result in unquoted: in zsh a `$MCP` variable is one word, and Codex
 then fails with `expected a boolean in mcp_servers.<name>.enabled`; use
 `${=MCP}`.
+
+**Codex environment.** A `shell_environment_policy` with `inherit = "core"`
+in `~/.codex/config.toml` hands the advisor's shell no `HERDR_*` variables,
+so the Herdr skill's `HERDR_ENV` check fails and the advisor stops on its
+first step without prompting the worker. The two `shell_environment_policy.set`
+overrides put back `HERDR_ENV` and the session socket under any `inherit`,
+and merge with the user's own `set` table rather than replace it. They do not
+widen `inherit`, which would hand the model's shell every other variable.
 
 Leave out `--disable plugins` (drops every plugin skill and hook), `-s
 read-only` (severs the herdr socket) and `--approve-for-me` (a reviewer swap).
