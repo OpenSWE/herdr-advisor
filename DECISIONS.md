@@ -477,3 +477,13 @@ An investigation in the same session corrected a belief formed that night: a `pr
 **Outcome:** applied
 **Ref:** herdr-advisor/HARNESS-CLIS.md (Gaps, Amp and Hermes). Commit: 03ff7f3.
 **Supersedes:** Q63's clause leaving Hermes as found.
+
+## Q65 — herdr-advisor/codex-env — gate-resolution
+
+**Question:** On a host whose `~/.codex/config.toml` sets `shell_environment_policy.inherit = "core"`, a Codex advisor launched from the row ran the Herdr skill's `HERDR_ENV` check, failed it and stopped without prompting the worker (mac-mini-m2, 2026-10-08). How should the row restore Herdr's environment?
+**Options considered:** `-c shell_environment_policy.inherit=all` / `-c shell_environment_policy.set.*` for the variables the advisor needs / leave it to the user's config
+**Chosen:** Two `set` overrides: `HERDR_ENV="1"` and `HERDR_SOCKET_PATH` expanded at launch, like the socket in `unix_sockets`. Not the pane, tab or workspace IDs: the worker's shell expands the arguments, so those would name the worker's pane, and the advisor uses none of them.
+**Decided-by:** human (Frank asked for the fix; the agent chose `set` over `inherit=all`)
+**Justification:** Measured on m2 with the published row: `ENV-MISSING`, `SOCK=unset`, `herdr` still working through the default socket. With the overrides: `ENV-OK`, the socket path set, and a variable from the user's own `set` table still present, so `-c` merges into that table. `inherit=all` would also fix it but hands the model's shell every other variable and overrides a choice the user made.
+**Outcome:** applied
+**Ref:** herdr-advisor/HARNESS-CLIS.md (Codex row, Codex environment). Commit: 164b07f.
