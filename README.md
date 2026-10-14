@@ -81,7 +81,7 @@ A row in `HARNESS-CLIS.md` without a `†` is one this has passed.
 ## Why the rules are what they are
 
 [`DECISIONS.md`](DECISIONS.md) — 31 entries, Q22 onward, recording every consequential call behind
-this skill, kept per the [`log-decisions`](https://github.com/OpenSWE/log-decisions) skill. Start
+this skill, kept per the [`log-decisions`](https://github.com/OpenSWE/skills) skill. Start
 there before changing a rule; most of them are load-bearing in a way that is not obvious.
 
 ## Provenance
