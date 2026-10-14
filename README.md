@@ -1,5 +1,7 @@
 # herdr-advisor
 
+> **Moved.** This skill now lives in [`OpenSWE/skills`](https://github.com/OpenSWE/skills/tree/main/skills/herdr-advisor), with its full history. This repo is archived and gets no updates. Install with `npx skills add OpenSWE/skills --skill herdr-advisor`, or `/plugin install herdr-advisor@openswe` after `/plugin marketplace add OpenSWE/skills`.
+
 Pair a [Herdr](https://github.com/herdrdev/herdr) worker with one **advisor** — a stronger model,
 running in its own pane, that answers the worker's questions on the user's behalf to unblock it and
 leads it to its next task.
